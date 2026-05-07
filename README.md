@@ -1,73 +1,186 @@
-# React + TypeScript + Vite
+# CareSplit Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Modern, responsive web interface for the CareSplit community savings protocol
 
-Currently, two official plugins are available:
+## 🎨 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Beautiful Home Page** - Clean, modern design with smooth animations
+- **Responsive Design** - Works perfectly on desktop, tablet, and mobile
+- **Dark Mode Support** - Automatic theme switching based on system preferences
+- **Fast & Lightweight** - Built with Vite for optimal performance
 
-## React Compiler
+## 🚀 Quick Start
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
 
-## Expanding the ESLint configuration
+- Node.js 18+ and npm
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Installation
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+```bash
+# Install dependencies
+npm install
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# Start development server
+npm run dev
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📁 Project Structure
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+caresplit/
+├── src/
+│   ├── App.tsx          # Main application component
+│   ├── App.css          # Application styles
+│   ├── index.css        # Global styles and theme
+│   └── main.tsx         # Application entry point
+├── public/              # Static assets
+└── index.html           # HTML template
+```
+
+## 🎯 Current Features
+
+### Home Page
+- ✅ Hero section with call-to-action
+- ✅ Features showcase (6 key features)
+- ✅ How it works (4-step process)
+- ✅ Statistics display
+- ✅ Call-to-action section
+- ✅ Footer with links
+
+### Design System
+- ✅ Consistent color palette
+- ✅ Typography system
+- ✅ Button components
+- ✅ Card components
+- ✅ Responsive grid layouts
+- ✅ Smooth transitions and hover effects
+
+## 🎨 Design Tokens
+
+### Colors
+- **Primary (Accent)**: Purple gradient (#aa3bff → #c084fc)
+- **Text**: Adaptive based on theme
+- **Background**: White (light) / Dark gray (dark)
+- **Borders**: Subtle gray tones
+
+### Typography
+- **Headings**: System UI fonts
+- **Body**: 18px base size
+- **Monospace**: For code elements
+
+## 🔜 Next Steps
+
+### Phase 1: Wallet Integration
+- [ ] Add RainbowKit for wallet connection
+- [ ] Configure Celo network
+- [ ] Display connected wallet address
+- [ ] Show wallet balance
+
+### Phase 2: Smart Contract Integration
+- [ ] Connect to deployed CareSplit contract
+- [ ] Read contract state (groups, members, balances)
+- [ ] Write contract functions (create group, join, contribute)
+- [ ] Display real-time data
+
+### Phase 3: Group Management
+- [ ] Create group form
+- [ ] Join group interface
+- [ ] Group dashboard
+- [ ] Member list display
+
+### Phase 4: Contributions
+- [ ] Contribution form
+- [ ] Transaction history
+- [ ] Balance tracking
+- [ ] Contribution reminders
+
+### Phase 5: Withdrawal System
+- [ ] Request withdrawal form
+- [ ] Voting interface
+- [ ] Request status tracking
+- [ ] Approval notifications
+
+### Phase 6: Enhanced Features
+- [ ] User profiles
+- [ ] Notifications system
+- [ ] Search and filters
+- [ ] Analytics dashboard
+- [ ] Mobile app (React Native)
+
+## 🛠️ Tech Stack
+
+- **Framework**: React 18 with TypeScript
+- **Build Tool**: Vite
+- **Styling**: CSS with CSS Variables
+- **Blockchain**: (To be added)
+  - wagmi for Ethereum interactions
+  - RainbowKit for wallet connection
+  - viem for contract interactions
+
+## 📱 Responsive Breakpoints
+
+- **Desktop**: 1024px and above
+- **Tablet**: 768px - 1023px
+- **Mobile**: Below 768px
+
+## 🎨 Theme Support
+
+The app automatically adapts to system theme preferences:
+- Light mode (default)
+- Dark mode (automatic)
+
+## 🚀 Deployment
+
+### Build for Production
+
+```bash
+npm run build
+```
+
+The build output will be in the `dist/` directory.
+
+### Deploy Options
+
+- **Vercel**: Connect your GitHub repo
+- **Netlify**: Drag and drop `dist/` folder
+- **IPFS**: For decentralized hosting
+- **Fleek**: Automated IPFS deployment
+
+## 📝 Development Guidelines
+
+### Code Style
+- Use TypeScript for type safety
+- Follow React best practices
+- Keep components small and focused
+- Use semantic HTML
+- Maintain accessibility standards
+
+### CSS Guidelines
+- Use CSS variables for theming
+- Mobile-first responsive design
+- Smooth transitions (0.2s - 0.3s)
+- Consistent spacing (8px grid)
+
+## 🤝 Contributing
+
+1. Create a feature branch
+2. Make your changes
+3. Test responsiveness
+4. Ensure dark mode works
+5. Submit a pull request
+
+## 📄 License
+
+MIT License - see LICENSE file for details
+
+---
+
+**Status**: 🎨 Home Page Complete | 🔄 Wallet Integration Next
+**Built with**: React + Vite + TypeScript
