@@ -25,3 +25,4 @@ dist-ssr
 
 # Local blockchain utilities (not tracked)
 blockchain-utils/
+test-accounts/
