@@ -1,8 +1,20 @@
 import React from 'react';
+import { useWallet } from '../../hooks/useWallet';
 
 export const Header: React.FC = () => {
+  const { address, isConnected, connectWallet, error, isMiniPay } = useWallet();
+
+  const formatAddress = (addr: string) => {
+    return `${addr.substring(0, 6)}...${addr.substring(addr.length - 4)}`;
+  };
+
   return (
     <header className="header">
+      {error && (
+        <div style={{ backgroundColor: 'rgba(255, 0, 0, 0.1)', color: 'red', padding: '8px', textAlign: 'center', fontSize: '14px' }}>
+          {error}
+        </div>
+      )}
       <div className="container">
         <div className="header-content">
           <div className="logo">
@@ -18,7 +30,11 @@ export const Header: React.FC = () => {
             <a href="#how-it-works">How It Works</a>
             <a href="#about">About</a>
           </nav>
-          <button className="btn-primary">Connect Wallet</button>
+          <button className="btn-primary" onClick={connectWallet}>
+            {isConnected && address 
+              ? formatAddress(address) 
+              : (isMiniPay ? 'Connect MiniPay' : 'Connect Wallet')}
+          </button>
         </div>
       </div>
     </header>
