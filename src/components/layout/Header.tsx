@@ -2,7 +2,7 @@ import React from 'react';
 import { useWallet } from '../../hooks/useWallet';
 
 export const Header: React.FC = () => {
-  const { address, isConnected, connectWallet, error, isMiniPay } = useWallet();
+  const { address, isConnected, connectWallet, connectWalletConnect, error, isMiniPay, isConnecting } = useWallet();
 
   const formatAddress = (addr: string) => {
     return `${addr.substring(0, 6)}...${addr.substring(addr.length - 4)}`;
@@ -30,11 +30,27 @@ export const Header: React.FC = () => {
             <a href="#how-it-works">How It Works</a>
             <a href="#about">About</a>
           </nav>
-          <button className="btn-primary" onClick={connectWallet}>
-            {isConnected && address 
-              ? formatAddress(address) 
-              : (isMiniPay ? 'Connect MiniPay' : 'Connect Wallet')}
-          </button>
+          
+          <div style={{ display: 'flex', gap: '12px' }}>
+            {isConnected && address ? (
+              <button className="btn-primary">
+                {formatAddress(address)}
+              </button>
+            ) : isMiniPay ? (
+              <button className="btn-primary" onClick={connectWallet} disabled={isConnecting}>
+                {isConnecting ? 'Connecting...' : 'Connect MiniPay'}
+              </button>
+            ) : (
+              <>
+                <button className="btn-secondary" onClick={connectWalletConnect} disabled={isConnecting}>
+                  WalletConnect
+                </button>
+                <button className="btn-primary" onClick={connectWallet} disabled={isConnecting}>
+                  Browser Wallet
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </header>
