@@ -1,34 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useCareSplit } from '../../hooks/useCareSplit';
+import { CreateGroupModal } from '../modals/CreateGroupModal';
+import { JoinGroupModal } from '../modals/JoinGroupModal';
 
 export const HeroSection: React.FC = () => {
-  const { stats, isLoadingStats, createGroup, joinGroup, isTransacting } = useCareSplit();
-
-  const handleCreateGroup = async () => {
-    try {
-      // For MVP, using default parameters or prompt
-      const amount = window.prompt("Enter contribution amount (in CELO)", "0.01");
-      if (!amount) return;
-      const maxMembers = parseInt(window.prompt("Enter max members", "5") || "5", 10);
-      const threshold = parseInt(window.prompt("Enter voting threshold (1-100)", "60") || "60", 10);
-      
-      await createGroup(amount, maxMembers, threshold);
-      alert("Group created successfully!");
-    } catch (err: any) {
-      alert("Failed to create group: " + (err.shortMessage || err.message));
-    }
-  };
-
-  const handleJoinGroup = async () => {
-    try {
-      const groupId = parseInt(window.prompt("Enter Group ID to join", "1") || "0", 10);
-      if (!groupId) return;
-      await joinGroup(groupId);
-      alert("Successfully joined group " + groupId);
-    } catch (err: any) {
-      alert("Failed to join group: " + (err.shortMessage || err.message));
-    }
-  };
+  const { stats, isLoadingStats, isTransacting } = useCareSplit();
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
 
   return (
     <section className="hero-section">
@@ -48,13 +26,13 @@ export const HeroSection: React.FC = () => {
             and support each other during emergencies through democratic voting.
           </p>
           <div className="hero-actions">
-            <button className="btn-primary btn-large" onClick={handleCreateGroup} disabled={isTransacting}>
+            <button className="btn-primary btn-large" onClick={() => setIsCreateModalOpen(true)} disabled={isTransacting}>
               {isTransacting ? 'Processing...' : 'Create a Group'}
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M7.5 15l5-5-5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </button>
-            <button className="btn-secondary btn-large" onClick={handleJoinGroup} disabled={isTransacting}>
+            <button className="btn-secondary btn-large" onClick={() => setIsJoinModalOpen(true)} disabled={isTransacting}>
               Join Existing Group
             </button>
           </div>
@@ -76,6 +54,15 @@ export const HeroSection: React.FC = () => {
           </div>
         </div>
       </div>
+      
+      <CreateGroupModal 
+        isOpen={isCreateModalOpen} 
+        onClose={() => setIsCreateModalOpen(false)} 
+      />
+      <JoinGroupModal 
+        isOpen={isJoinModalOpen} 
+        onClose={() => setIsJoinModalOpen(false)} 
+      />
     </section>
   );
 };
