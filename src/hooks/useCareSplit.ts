@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { ethers } from 'ethers';
 import { CARESPLIT_ADDRESS, CARESPLIT_ABI } from '../config/contract';
-import { useWallet } from './useWallet';
+import { useWallet } from '../contexts/WalletContext';
 
 export interface ProtocolStats {
   activeGroups: number;

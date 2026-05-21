@@ -1,5 +1,5 @@
 import React from 'react';
-import { useWallet } from '../../hooks/useWallet';
+import { useWallet } from '../../contexts/WalletContext';
 
 export const Header: React.FC = () => {
   const { address, isConnected, connectWallet, connectWalletConnect, error, isMiniPay, isConnecting } = useWallet();
