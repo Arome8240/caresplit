@@ -8,6 +8,7 @@ export const CARESPLIT_ABI = [
   "function voteOnRequest(uint256 _requestId, bool _approve) external",
   "function executeWithdrawal(uint256 _requestId) external",
   "function getGroup(uint256 _groupId) external view returns (tuple(uint256 id, address creator, uint256 contributionAmount, uint256 maxMembers, uint256 votingThreshold, uint256 totalBalance, uint256 memberCount, bool isActive, uint256 createdAt))",
+  "function getMember(uint256 _groupId, address _member) external view returns (tuple(address memberAddress, uint256 totalContributed, bool isActive, uint256 joinedAt))",
   "function getTotalGroups() external view returns (uint256)",
   "function getGroupBalance(uint256 _groupId) external view returns (uint256)",
   "event GroupCreated(uint256 indexed groupId, address indexed creator, uint256 contributionAmount, uint256 maxMembers, uint256 votingThreshold)",
