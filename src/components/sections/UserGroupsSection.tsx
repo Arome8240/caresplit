@@ -24,13 +24,13 @@ export const UserGroupsSection: React.FC = () => {
             Loading your groups...
           </div>
         ) : userGroups.length === 0 ? (
-          <div style={{ 
-            background: 'var(--glass-bg)', 
-            border: '1px solid var(--border)', 
-            borderRadius: '24px', 
-            padding: '48px', 
+          <div style={{
+            background: 'var(--glass-bg)',
+            border: '1px solid var(--border)',
+            borderRadius: '24px',
+            padding: '48px',
             textAlign: 'center',
-            backdropFilter: 'blur(10px)' 
+            backdropFilter: 'blur(10px)'
           }}>
             <h3 style={{ color: 'var(--text-h)', marginBottom: '16px', fontSize: '20px' }}>No Groups Found</h3>
             <p style={{ color: 'var(--text)' }}>You haven't joined any groups yet. Create or join one to get started!</p>
@@ -41,18 +41,18 @@ export const UserGroupsSection: React.FC = () => {
               <div key={group.id} className="feature-card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: 'var(--text-h)' }}>Group #{group.id}</h3>
-                  <span style={{ 
-                    padding: '4px 12px', 
-                    borderRadius: '20px', 
-                    fontSize: '12px', 
-                    fontWeight: 'bold', 
-                    background: 'var(--accent-bg)', 
-                    color: 'var(--accent)' 
+                  <span style={{
+                    padding: '4px 12px',
+                    borderRadius: '20px',
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                    background: 'var(--accent-bg)',
+                    color: 'var(--accent)'
                   }}>
                     {group.memberCount} / {group.maxMembers} Members
                   </span>
                 </div>
-                
+
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <span style={{ color: 'var(--text)', fontSize: '14px' }}>Requirement:</span>
@@ -67,9 +67,9 @@ export const UserGroupsSection: React.FC = () => {
                     <span style={{ color: 'var(--accent)', fontWeight: 'bold' }}>{group.myContribution} CELO</span>
                   </div>
                 </div>
-                
-                <button 
-                  className="btn-primary" 
+
+                <button
+                  className="btn-primary"
                   style={{ width: '100%', marginTop: 'auto' }}
                   onClick={() => setSelectedGroup(group)}
                 >
@@ -82,8 +82,8 @@ export const UserGroupsSection: React.FC = () => {
       </div>
 
       {selectedGroup && (
-        <ContributeModal 
-          isOpen={true} 
+        <ContributeModal
+          isOpen={true}
           onClose={() => setSelectedGroup(null)}
           groupId={selectedGroup.id}
           requiredAmount={selectedGroup.contributionAmount}
