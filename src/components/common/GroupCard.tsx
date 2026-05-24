@@ -93,16 +93,31 @@ export const GroupCard: React.FC<GroupCardProps> = ({
       </div>
 
       <div className="group-card-actions">
-        <button className="btn-primary" style={{ flex: 1 }} onClick={() => onContribute(group)}>
+        <button
+          className="btn-primary"
+          style={{ flex: 1 }}
+          onClick={() => onContribute(group)}
+          aria-label={`Contribute to Group #${group.id}`}
+        >
           Contribute
         </button>
-        <button className="btn-secondary" onClick={() => onRequestWithdrawal(group)} title="Request withdrawal">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+        <button
+          className="btn-secondary"
+          onClick={() => onRequestWithdrawal(group)}
+          title="Request withdrawal"
+          aria-label={`Request withdrawal from Group #${group.id}`}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
-        <button className="btn-secondary" onClick={() => onViewDetails(group)} title="View details">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+        <button
+          className="btn-secondary"
+          onClick={() => onViewDetails(group)}
+          title="View details"
+          aria-label={`View details for Group #${group.id}`}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2"/>
             <path d="M21 21l-4.35-4.35M11 8v3M11 14h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
           </svg>
