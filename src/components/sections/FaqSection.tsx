@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useId } from 'react';
 
 const faqs = [
   {
@@ -29,29 +29,47 @@ const faqs = [
 
 const FaqItem: React.FC<{ q: string; a: string }> = ({ q, a }) => {
   const [open, setOpen] = useState(false);
+  const id = useId();
+  const answerId = `faq-answer-${id}`;
 
   return (
     <div className={`faq-item ${open ? 'open' : ''}`}>
-      <button className="faq-question" onClick={() => setOpen(v => !v)} aria-expanded={open}>
+      <button
+        className="faq-question"
+        onClick={() => setOpen(v => !v)}
+        aria-expanded={open}
+        aria-controls={answerId}
+      >
         <span>{q}</span>
-        <svg className="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <svg className="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
       </button>
-      {open && <p className="faq-answer">{a}</p>}
+      <div
+        id={answerId}
+        className="faq-answer-wrapper"
+        role="region"
+        aria-hidden={!open}
+      >
+        {open && <p className="faq-answer">{a}</p>}
+      </div>
     </div>
   );
 };
 
 export const FaqSection: React.FC = () => (
-  <section id="faq" className="faq-section">
+  <section id="faq" className="faq-section" aria-label="Frequently asked questions">
     <div className="container">
       <div className="section-header">
         <h2 className="section-title">Frequently Asked Questions</h2>
         <p className="section-description">Everything you need to know about CareSplit</p>
       </div>
-      <div className="faq-list">
-        {faqs.map((item, i) => <FaqItem key={i} {...item} />)}
+      <div className="faq-list" role="list">
+        {faqs.map((item, i) => (
+          <div role="listitem" key={i}>
+            <FaqItem {...item} />
+          </div>
+        ))}
       </div>
     </div>
   </section>
