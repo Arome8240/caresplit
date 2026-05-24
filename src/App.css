@@ -1342,6 +1342,17 @@
   .stats-section-value { font-size: 32px; }
 }
 
+@media (max-width: 480px) {
+  .stats-section-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 24px 16px;
+    gap: 20px;
+    border-radius: 20px;
+  }
+  .stats-section-value { font-size: 26px; }
+  .stats-section-label { font-size: 12px; }
+}
+
 /* =====================
    Trust Section
    ===================== */
