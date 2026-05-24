@@ -1,4 +1,5 @@
 import React, { useState, useId } from 'react';
+import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
 
 const faqs = [
   {
@@ -57,20 +58,33 @@ const FaqItem: React.FC<{ q: string; a: string }> = ({ q, a }) => {
   );
 };
 
-export const FaqSection: React.FC = () => (
-  <section id="faq" className="faq-section" aria-label="Frequently asked questions">
-    <div className="container">
-      <div className="section-header">
-        <h2 className="section-title">Frequently Asked Questions</h2>
-        <p className="section-description">Everything you need to know about CareSplit</p>
+export const FaqSection: React.FC = () => {
+  const [ref, isVisible] = useIntersectionObserver({ threshold: 0.1 });
+  return (
+    <section
+      id="faq"
+      className="faq-section"
+      aria-label="Frequently asked questions"
+      ref={ref as React.RefObject<HTMLElement>}
+    >
+      <div className="container">
+        <div className={`section-header fade-in-section ${isVisible ? 'visible' : ''}`}>
+          <h2 className="section-title">Frequently Asked Questions</h2>
+          <p className="section-description">Everything you need to know about CareSplit</p>
+        </div>
+        <div className="faq-list" role="list">
+          {faqs.map((item, i) => (
+            <div
+              role="listitem"
+              key={i}
+              className={`fade-in-section ${isVisible ? 'visible' : ''}`}
+              style={{ transitionDelay: `${i * 60}ms` }}
+            >
+              <FaqItem {...item} />
+            </div>
+          ))}
+        </div>
       </div>
-      <div className="faq-list" role="list">
-        {faqs.map((item, i) => (
-          <div role="listitem" key={i}>
-            <FaqItem {...item} />
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
