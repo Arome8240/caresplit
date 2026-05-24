@@ -1447,6 +1447,28 @@
   min-height: 100px;
 }
 
+.form-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.form-label-row .form-label {
+  margin-bottom: 0;
+}
+
+.char-counter {
+  font-size: 12px;
+  color: var(--text-muted, rgba(255,255,255,0.4));
+  font-variant-numeric: tabular-nums;
+}
+
+.char-counter-warn {
+  color: #f59e0b;
+  font-weight: 600;
+}
+
 .modal-description {
   color: var(--text);
   font-size: 14px;

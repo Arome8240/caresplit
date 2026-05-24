@@ -63,11 +63,14 @@ export const WithdrawalRequestModal: React.FC<Props> = ({ isOpen, onClose, group
         </div>
 
         <div className="form-group">
-          <label className="form-label">
-            Reason
-            <span className="form-hint">{reason.length}/500</span>
-          </label>
+          <div className="form-label-row">
+            <label className="form-label" htmlFor="withdrawal-reason">Reason</label>
+            <span className={`char-counter ${reason.length > 450 ? 'char-counter-warn' : ''}`}>
+              {reason.length}/500
+            </span>
+          </div>
           <textarea
+            id="withdrawal-reason"
             className={`form-input form-textarea ${errors.reason ? 'form-input-error' : ''}`}
             value={reason}
             onChange={e => setReason(e.target.value)}
@@ -75,8 +78,9 @@ export const WithdrawalRequestModal: React.FC<Props> = ({ isOpen, onClose, group
             disabled={isTransacting}
             rows={4}
             maxLength={500}
+            aria-describedby={errors.reason ? 'reason-error' : undefined}
           />
-          {errors.reason && <span className="form-error">{errors.reason}</span>}
+          {errors.reason && <span id="reason-error" className="form-error" role="alert">{errors.reason}</span>}
         </div>
 
         <button type="submit" className="btn-primary form-submit" disabled={isTransacting}>
