@@ -31,13 +31,23 @@ export const ToastContainer: React.FC = () => {
   if (toasts.length === 0) return null;
 
   return (
-    <div className="toast-container">
+    <div
+      className="toast-container"
+      role="region"
+      aria-label="Notifications"
+      aria-live="polite"
+      aria-atomic="false"
+    >
       {toasts.map(toast => (
-        <div key={toast.id} className={`toast toast-${toast.type}`}>
-          <span className="toast-icon">{icons[toast.type]}</span>
+        <div
+          key={toast.id}
+          className={`toast toast-${toast.type}`}
+          role={toast.type === 'error' ? 'alert' : 'status'}
+        >
+          <span className="toast-icon" aria-hidden="true">{icons[toast.type]}</span>
           <span className="toast-message">{toast.message}</span>
-          <button className="toast-close" onClick={() => removeToast(toast.id)} aria-label="Dismiss">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+          <button className="toast-close" onClick={() => removeToast(toast.id)} aria-label="Dismiss notification">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
             </svg>
           </button>
