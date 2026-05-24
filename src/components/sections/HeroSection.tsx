@@ -1,7 +1,18 @@
 import React, { useState } from 'react';
 import { useCareSplit } from '../../hooks/useCareSplit';
+import { useAnimatedCounter } from '../../hooks/useAnimatedCounter';
 import { CreateGroupModal } from '../modals/CreateGroupModal';
 import { JoinGroupModal } from '../modals/JoinGroupModal';
+import { StatSkeleton } from '../ui/Skeleton';
+import { formatCelo } from '../../utils/format';
+
+const AnimatedStatValue: React.FC<{ value: number; isLoading: boolean; prefix?: string; suffix?: string }> = ({
+  value, isLoading, prefix = '', suffix = '',
+}) => {
+  const animated = useAnimatedCounter(value, 1500, !isLoading);
+  if (isLoading) return <StatSkeleton />;
+  return <div className="stat-value">{prefix}{animated.toLocaleString()}{suffix}</div>;
+};
 
 export const HeroSection: React.FC = () => {
   const { stats, isLoadingStats, isTransacting } = useCareSplit();
@@ -13,7 +24,7 @@ export const HeroSection: React.FC = () => {
       <div className="container">
         <div className="hero-content">
           <div className="hero-badge">
-            <span className="badge-dot"></span>
+            <span className="badge-dot" aria-hidden="true" />
             Built on Celo Blockchain
           </div>
           <h1 className="hero-title">
@@ -26,43 +37,66 @@ export const HeroSection: React.FC = () => {
             and support each other during emergencies through democratic voting.
           </p>
           <div className="hero-actions">
-            <button className="btn-primary btn-large" onClick={() => setIsCreateModalOpen(true)} disabled={isTransacting}>
+            <button
+              className="btn-primary btn-large"
+              onClick={() => setIsCreateModalOpen(true)}
+              disabled={isTransacting}
+              aria-label="Create a new savings group"
+            >
               {isTransacting ? 'Processing...' : 'Create a Group'}
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                 <path d="M7.5 15l5-5-5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </button>
-            <button className="btn-secondary btn-large" onClick={() => setIsJoinModalOpen(true)} disabled={isTransacting}>
+            <button
+              className="btn-secondary btn-large"
+              onClick={() => setIsJoinModalOpen(true)}
+              disabled={isTransacting}
+              aria-label="Join an existing savings group"
+            >
               Join Existing Group
             </button>
           </div>
-          <div className="hero-stats">
+
+          <div className="hero-stats" role="region" aria-label="Protocol statistics">
             <div className="stat">
-              <div className="stat-value">{isLoadingStats ? '...' : stats.activeGroups.toLocaleString()}</div>
-              <div className="stat-label">Active Groups</div>
+              {isLoadingStats ? (
+                <StatSkeleton />
+              ) : (
+                <>
+                  <AnimatedStatValue value={stats.activeGroups} isLoading={isLoadingStats} />
+                  <div className="stat-label">Active Groups</div>
+                </>
+              )}
             </div>
-            <div className="stat-divider"></div>
+            <div className="stat-divider" aria-hidden="true" />
             <div className="stat">
-              <div className="stat-value">{isLoadingStats ? '...' : `${Number(stats.totalSaved).toFixed(2)} CELO`}</div>
-              <div className="stat-label">Total Saved</div>
+              {isLoadingStats ? (
+                <StatSkeleton />
+              ) : (
+                <>
+                  <div className="stat-value">{formatCelo(stats.totalSaved, 2)} CELO</div>
+                  <div className="stat-label">Total Saved</div>
+                </>
+              )}
             </div>
-            <div className="stat-divider"></div>
+            <div className="stat-divider" aria-hidden="true" />
             <div className="stat">
-              <div className="stat-value">{isLoadingStats ? '...' : stats.members.toLocaleString()}</div>
-              <div className="stat-label">Members</div>
+              {isLoadingStats ? (
+                <StatSkeleton />
+              ) : (
+                <>
+                  <AnimatedStatValue value={stats.members} isLoading={isLoadingStats} />
+                  <div className="stat-label">Members</div>
+                </>
+              )}
             </div>
           </div>
         </div>
       </div>
-      
-      <CreateGroupModal 
-        isOpen={isCreateModalOpen} 
-        onClose={() => setIsCreateModalOpen(false)} 
-      />
-      <JoinGroupModal 
-        isOpen={isJoinModalOpen} 
-        onClose={() => setIsJoinModalOpen(false)} 
-      />
+
+      <CreateGroupModal isOpen={isCreateModalOpen} onClose={() => setIsCreateModalOpen(false)} />
+      <JoinGroupModal isOpen={isJoinModalOpen} onClose={() => setIsJoinModalOpen(false)} />
     </section>
   );
 };
