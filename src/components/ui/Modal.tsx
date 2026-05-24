@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import type { ReactNode } from 'react';
+import { useBodyScrollLock } from '../../hooks/useBodyScrollLock';
 
 interface ModalProps {
   isOpen: boolean;
@@ -10,10 +11,10 @@ interface ModalProps {
 
 export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
   const contentRef = useRef<HTMLDivElement>(null);
+  useBodyScrollLock(isOpen);
 
   useEffect(() => {
     if (!isOpen) return;
-    document.body.style.overflow = 'hidden';
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -39,7 +40,6 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }
     }, 50);
 
     return () => {
-      document.body.style.overflow = 'unset';
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [isOpen, onClose]);
