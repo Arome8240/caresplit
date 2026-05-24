@@ -1,4 +1,5 @@
 import React from 'react';
+import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
 
 const trustItems = [
   {
@@ -47,22 +48,29 @@ const trustItems = [
   },
 ];
 
-export const TrustSection: React.FC = () => (
-  <section className="trust-section">
-    <div className="container">
-      <div className="section-header">
-        <h2 className="section-title">Why Trust CareSplit?</h2>
-        <p className="section-description">Built on transparency, security, and community governance</p>
+export const TrustSection: React.FC = () => {
+  const [ref, isVisible] = useIntersectionObserver({ threshold: 0.1 });
+  return (
+    <section className="trust-section" ref={ref as React.RefObject<HTMLElement>} aria-label="Why trust CareSplit">
+      <div className="container">
+        <div className={`section-header fade-in-section ${isVisible ? 'visible' : ''}`}>
+          <h2 className="section-title">Why Trust CareSplit?</h2>
+          <p className="section-description">Built on transparency, security, and community governance</p>
+        </div>
+        <div className="trust-grid">
+          {trustItems.map((item, i) => (
+            <div
+              key={i}
+              className={`trust-item fade-in-section ${isVisible ? 'visible' : ''}`}
+              style={{ transitionDelay: `${i * 80}ms` }}
+            >
+              <div className="trust-icon" aria-hidden="true">{item.icon}</div>
+              <h3 className="trust-title">{item.title}</h3>
+              <p className="trust-desc">{item.desc}</p>
+            </div>
+          ))}
+        </div>
       </div>
-      <div className="trust-grid">
-        {trustItems.map((item, i) => (
-          <div key={i} className="trust-item">
-            <div className="trust-icon">{item.icon}</div>
-            <h3 className="trust-title">{item.title}</h3>
-            <p className="trust-desc">{item.desc}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
