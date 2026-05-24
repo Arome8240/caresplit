@@ -8,10 +8,11 @@ const AnimatedStat: React.FC<{ value: number; label: string; prefix?: string; su
   value, label, prefix = '', suffix = '', isActive,
 }) => {
   const animated = useAnimatedCounter(value, 1800, isActive);
+  const displayValue = `${prefix}${formatNumber(animated)}${suffix}`;
   return (
-    <div className="stats-section-stat">
-      <div className="stats-section-value">
-        {prefix}{formatNumber(animated)}{suffix}
+    <div className="stats-section-stat" role="group" aria-label={`${label}: ${displayValue}`}>
+      <div className="stats-section-value" aria-hidden="true">
+        {displayValue}
       </div>
       <div className="stats-section-label">{label}</div>
     </div>
@@ -30,17 +31,23 @@ export const StatsSection: React.FC = () => {
   ];
 
   return (
-    <section ref={ref as React.RefObject<HTMLElement>} className="stats-section">
+    <section
+      ref={ref as React.RefObject<HTMLElement>}
+      className="stats-section"
+      aria-label="Protocol statistics"
+    >
       <div className="container">
-        <div className={`stats-section-grid fade-in-section ${isVisible ? 'visible' : ''}`}>
+        <div className={`stats-section-grid fade-in-section ${isVisible ? 'visible' : ''}`} role="list">
           {items.map((item, i) =>
             isLoadingStats ? (
-              <div key={i} className="stats-section-stat">
+              <div key={i} className="stats-section-stat" role="listitem" aria-busy="true" aria-label="Loading...">
                 <div className="skeleton" style={{ width: '80px', height: '40px', borderRadius: '8px', margin: '0 auto' }} />
                 <div className="skeleton" style={{ width: '120px', height: '14px', borderRadius: '4px', margin: '8px auto 0' }} />
               </div>
             ) : (
-              <AnimatedStat key={i} {...item} isActive={isVisible} />
+              <div role="listitem" key={i}>
+                <AnimatedStat {...item} isActive={isVisible} />
+              </div>
             )
           )}
         </div>
