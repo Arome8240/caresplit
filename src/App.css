@@ -2043,7 +2043,27 @@
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 6px;
+}
+
+/* Override for elements that already have border-radius */
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible {
+  outline-offset: 4px;
+  border-radius: 12px;
+}
+
+.modal-close:focus-visible,
+.toast-close:focus-visible,
+.copy-id-btn:focus-visible,
+.scroll-to-top:focus-visible {
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+.faq-question:focus-visible {
+  outline-offset: 0;
+  border-radius: 12px;
 }
 
 .logo { text-decoration: none; }
