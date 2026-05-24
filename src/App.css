@@ -1195,3 +1195,114 @@
   outline: none;
   border-color: var(--accent);
 }
+
+/* =====================
+   Stats Section
+   ===================== */
+.stats-section {
+  padding: 60px 0;
+  background: linear-gradient(to bottom, transparent, var(--social-bg), transparent);
+}
+
+.stats-section-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  padding: 48px 40px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+}
+
+.stats-section-stat { text-align: center; }
+
+.stats-section-value {
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--text-h);
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--accent) 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stats-section-label {
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+@media (max-width: 768px) {
+  .stats-section-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 32px 24px;
+    gap: 24px;
+  }
+  .stats-section-value { font-size: 32px; }
+}
+
+/* =====================
+   Trust Section
+   ===================== */
+.trust-section {
+  padding: 100px 0;
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.trust-item {
+  padding: 32px 24px;
+  background: var(--glass-bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s;
+  text-align: center;
+}
+
+.trust-item:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-border);
+  box-shadow: var(--shadow);
+}
+
+.trust-icon {
+  width: 56px;
+  height: 56px;
+  background: var(--accent-bg);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  margin: 0 auto 20px;
+}
+
+.trust-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-h);
+  margin-bottom: 12px;
+}
+
+.trust-desc {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+@media (max-width: 1024px) {
+  .trust-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .trust-grid { grid-template-columns: 1fr; }
+}
