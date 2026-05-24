@@ -1238,6 +1238,22 @@
 
 .dashboard-title { font-size: 32px !important; margin-bottom: 8px; }
 
+.refresh-btn {
+  padding: 10px 16px;
+  font-size: 14px;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.spin {
+  animation: rotate 0.8s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 .dashboard-controls {
   display: flex;
   gap: 12px;

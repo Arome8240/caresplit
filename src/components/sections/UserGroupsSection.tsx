@@ -14,7 +14,7 @@ type SortKey = 'id' | 'balance' | 'members';
 
 export const UserGroupsSection: React.FC = () => {
   const { isConnected } = useWallet();
-  const { userGroups, isLoadingUserGroups } = useCareSplit();
+  const { userGroups, isLoadingUserGroups, refreshUserGroups } = useCareSplit();
 
   const [selectedForContribute, setSelectedForContribute] = useState<UserGroup | null>(null);
   const [selectedForWithdrawal, setSelectedForWithdrawal] = useState<UserGroup | null>(null);
@@ -47,6 +47,25 @@ export const UserGroupsSection: React.FC = () => {
             <h2 className="section-title dashboard-title">My Dashboard</h2>
             <p className="section-description">Manage your savings groups and contributions</p>
           </div>
+          <button
+            className="btn-secondary refresh-btn"
+            onClick={() => refreshUserGroups()}
+            disabled={isLoadingUserGroups}
+            aria-label="Refresh groups"
+            title="Refresh"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              className={isLoadingUserGroups ? 'spin' : ''}
+              aria-hidden="true"
+            >
+              <path d="M4 4v5h.582M20 20v-5h-.581M4.582 9A8 8 0 0119.419 15M19.419 9A8 8 0 014.582 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Refresh
+          </button>
           {userGroups.length > 0 && (
             <div className="dashboard-controls">
               <div className="search-wrapper">
