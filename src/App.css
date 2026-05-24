@@ -2161,3 +2161,56 @@
     --section-pad: var(--section-pad-sm);
   }
 }
+
+/* =====================
+   Final production polish
+   ===================== */
+
+/* Improve text selection color */
+::selection {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+/* Prevent orphans in headings */
+.section-title,
+.hero-title,
+.cta-title,
+.feature-title,
+.step-title {
+  text-wrap: balance;
+}
+
+/* Consistent line-height for body copy */
+.feature-description,
+.step-description,
+.trust-desc,
+.faq-answer,
+.modal-description,
+.hero-description {
+  line-height: 1.65;
+}
+
+/* Smooth scrolling at root */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+/* Better tap targets on touch devices */
+@media (pointer: coarse) {
+  .btn-primary,
+  .btn-secondary {
+    min-height: 48px;
+  }
+
+  .faq-question {
+    min-height: 52px;
+  }
+
+  .mobile-nav-link {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+  }
+}
