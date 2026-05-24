@@ -20,10 +20,10 @@ export const HeroSection: React.FC = () => {
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
 
   return (
-    <section className="hero-section">
+    <section className="hero-section" aria-label="Hero — community savings on Celo">
       <div className="container">
         <div className="hero-content">
-          <div className="hero-badge">
+          <div className="hero-badge" role="note" aria-label="Built on Celo Blockchain">
             <span className="badge-dot" aria-hidden="true" />
             Built on Celo Blockchain
           </div>
