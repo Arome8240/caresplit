@@ -1612,3 +1612,182 @@
 }
 
 .tx-hash-link:hover { text-decoration: underline; }
+
+/* =====================
+   Voting Modal
+   ===================== */
+.voting-modal-body { display: flex; flex-direction: column; gap: 20px; }
+
+.voting-info-card {
+  background: var(--social-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.voting-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.voting-label { font-size: 13px; color: var(--text); font-weight: 500; }
+.voting-value { font-size: 14px; color: var(--text-h); font-weight: 600; }
+.voting-value.accent { color: var(--accent); }
+
+.voting-reason-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.voting-reason-text {
+  font-size: 14px;
+  color: var(--text-h);
+  line-height: 1.6;
+  padding: 12px 16px;
+  background: var(--glass-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.voting-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.btn-vote {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.btn-approve {
+  background: rgba(34,197,94,0.12);
+  color: #16a34a;
+  border: 1px solid rgba(34,197,94,0.3);
+}
+
+.btn-approve:hover {
+  background: #22c55e;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.btn-reject {
+  background: rgba(239,68,68,0.1);
+  color: #dc2626;
+  border: 1px solid rgba(239,68,68,0.3);
+}
+
+.btn-reject:hover {
+  background: #ef4444;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.vote-result {
+  text-align: center;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.vote-approve { background: rgba(34,197,94,0.12); color: #16a34a; }
+.vote-reject  { background: rgba(239,68,68,0.1);  color: #dc2626; }
+
+/* =====================
+   Group Details Modal
+   ===================== */
+.group-details-body { display: flex; flex-direction: column; gap: 20px; }
+
+.group-details-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.group-details-created { font-size: 13px; color: var(--text); }
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.detail-item { display: flex; flex-direction: column; gap: 4px; }
+.detail-label { font-size: 12px; color: var(--text); font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
+.detail-value { font-size: 16px; font-weight: 700; color: var(--text-h); }
+.detail-value.accent { color: var(--accent); }
+
+.detail-link {
+  display: inline-flex;
+  align-items: center;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  font-family: var(--mono);
+}
+
+.detail-link:hover { text-decoration: underline; }
+
+/* =====================
+   Share Modal
+   ===================== */
+.share-modal-body { display: flex; flex-direction: column; gap: 20px; }
+
+.share-id-display {
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  border-radius: 14px;
+  padding: 16px 20px;
+}
+
+.share-id-label { font-size: 12px; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+
+.share-id-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.share-id-value { font-size: 32px; font-weight: 700; color: var(--text-h); }
+
+.share-preview {
+  background: var(--social-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.share-text {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* =====================
+   Withdrawal Modal
+   ===================== */
+.withdrawal-modal-body { display: flex; flex-direction: column; gap: 20px; }
