@@ -479,12 +479,41 @@
 .footer-tagline {
   margin-top: 16px;
   color: var(--text);
+  line-height: 1.6;
 }
 
 .footer-links {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 32px;
+}
+
+@media (max-width: 640px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .footer-links {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .footer-brand {
+    max-width: 100%;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .footer-bottom-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
 }
 
 .footer-column h4 {
