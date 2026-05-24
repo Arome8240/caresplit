@@ -1,92 +1,133 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useCareSplit } from '../../hooks/useCareSplit';
-import type { UserGroup } from '../../hooks/useCareSplit';
+import type { UserGroup } from '../../types';
 import { useWallet } from '../../contexts/WalletContext';
+import { useDebounce } from '../../hooks/useDebounce';
 import { ContributeModal } from '../modals/ContributeModal';
+import { WithdrawalRequestModal } from '../modals/WithdrawalRequestModal';
+import { GroupDetailsModal } from '../modals/GroupDetailsModal';
+import { GroupCard } from '../common/GroupCard';
+import { EmptyState } from '../ui/EmptyState';
+import { GroupCardSkeleton } from '../ui/Skeleton';
+
+type SortKey = 'id' | 'balance' | 'members';
 
 export const UserGroupsSection: React.FC = () => {
   const { isConnected } = useWallet();
   const { userGroups, isLoadingUserGroups } = useCareSplit();
-  const [selectedGroup, setSelectedGroup] = useState<UserGroup | null>(null);
+
+  const [selectedForContribute, setSelectedForContribute] = useState<UserGroup | null>(null);
+  const [selectedForWithdrawal, setSelectedForWithdrawal] = useState<UserGroup | null>(null);
+  const [selectedForDetails, setSelectedForDetails] = useState<UserGroup | null>(null);
+  const [search, setSearch] = useState('');
+  const [sortKey, setSortKey] = useState<SortKey>('id');
+
+  const debouncedSearch = useDebounce(search, 300);
+
+  const filteredGroups = useMemo(() => {
+    let result = [...userGroups];
+    if (debouncedSearch) {
+      result = result.filter(g => String(g.id).includes(debouncedSearch));
+    }
+    result.sort((a, b) => {
+      if (sortKey === 'balance') return parseFloat(b.totalBalance) - parseFloat(a.totalBalance);
+      if (sortKey === 'members') return b.memberCount - a.memberCount;
+      return b.id - a.id;
+    });
+    return result;
+  }, [userGroups, debouncedSearch, sortKey]);
 
   if (!isConnected) return null;
 
   return (
-    <section className="features-section" style={{ padding: '60px 0' }} id="my-groups">
+    <section className="features-section dashboard-section" id="my-groups">
       <div className="container">
-        <div className="section-header" style={{ marginBottom: '40px', textAlign: 'left' }}>
-          <h2 className="section-title" style={{ fontSize: '32px' }}>My Dashboard</h2>
-          <p className="section-description">Manage the groups you have joined and make contributions.</p>
+        <div className="dashboard-header">
+          <div>
+            <h2 className="section-title dashboard-title">My Dashboard</h2>
+            <p className="section-description">Manage your savings groups and contributions</p>
+          </div>
+          {userGroups.length > 0 && (
+            <div className="dashboard-controls">
+              <div className="search-wrapper">
+                <svg className="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2"/>
+                  <path d="M21 21l-4.35-4.35" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+                <input
+                  type="search"
+                  className="search-input"
+                  placeholder="Search by Group ID..."
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                  aria-label="Search groups"
+                />
+              </div>
+              <select
+                className="sort-select"
+                value={sortKey}
+                onChange={e => setSortKey(e.target.value as SortKey)}
+                aria-label="Sort groups"
+              >
+                <option value="id">Newest First</option>
+                <option value="balance">Highest Balance</option>
+                <option value="members">Most Members</option>
+              </select>
+            </div>
+          )}
         </div>
 
         {isLoadingUserGroups ? (
-          <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text)' }}>
-            Loading your groups...
+          <div className="features-grid">
+            {[1, 2, 3].map(i => <GroupCardSkeleton key={i} />)}
           </div>
-        ) : userGroups.length === 0 ? (
-          <div style={{
-            background: 'var(--glass-bg)',
-            border: '1px solid var(--border)',
-            borderRadius: '24px',
-            padding: '48px',
-            textAlign: 'center',
-            backdropFilter: 'blur(10px)'
-          }}>
-            <h3 style={{ color: 'var(--text-h)', marginBottom: '16px', fontSize: '20px' }}>No Groups Found</h3>
-            <p style={{ color: 'var(--text)' }}>You haven't joined any groups yet. Create or join one to get started!</p>
-          </div>
+        ) : filteredGroups.length === 0 ? (
+          <EmptyState
+            icon={
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <circle cx="9" cy="7" r="4" stroke="currentColor" strokeWidth="1.5"/>
+                <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            }
+            title={search ? 'No matching groups' : 'No Groups Yet'}
+            description={search ? `No groups match "${search}"` : "You haven't joined any groups yet. Create or join one to get started!"}
+          />
         ) : (
           <div className="features-grid">
-            {userGroups.map((group) => (
-              <div key={group.id} className="feature-card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: 'var(--text-h)' }}>Group #{group.id}</h3>
-                  <span style={{
-                    padding: '4px 12px',
-                    borderRadius: '20px',
-                    fontSize: '12px',
-                    fontWeight: 'bold',
-                    background: 'var(--accent-bg)',
-                    color: 'var(--accent)'
-                  }}>
-                    {group.memberCount} / {group.maxMembers} Members
-                  </span>
-                </div>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span style={{ color: 'var(--text)', fontSize: '14px' }}>Requirement:</span>
-                    <span style={{ color: 'var(--text-h)', fontWeight: 'bold' }}>{group.contributionAmount} CELO</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span style={{ color: 'var(--text)', fontSize: '14px' }}>Group Balance:</span>
-                    <span style={{ color: 'var(--text-h)', fontWeight: 'bold' }}>{group.totalBalance} CELO</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span style={{ color: 'var(--text)', fontSize: '14px' }}>My Total:</span>
-                    <span style={{ color: 'var(--accent)', fontWeight: 'bold' }}>{group.myContribution} CELO</span>
-                  </div>
-                </div>
-
-                <button
-                  className="btn-primary"
-                  style={{ width: '100%', marginTop: 'auto' }}
-                  onClick={() => setSelectedGroup(group)}
-                >
-                  Contribute
-                </button>
-              </div>
+            {filteredGroups.map(group => (
+              <GroupCard
+                key={group.id}
+                group={group}
+                onContribute={setSelectedForContribute}
+                onRequestWithdrawal={setSelectedForWithdrawal}
+                onViewDetails={setSelectedForDetails}
+              />
             ))}
           </div>
         )}
       </div>
 
-      {selectedGroup && (
+      {selectedForContribute && (
         <ContributeModal
-          isOpen={true}
-          onClose={() => setSelectedGroup(null)}
-          groupId={selectedGroup.id}
-          requiredAmount={selectedGroup.contributionAmount}
+          isOpen
+          onClose={() => setSelectedForContribute(null)}
+          groupId={selectedForContribute.id}
+          requiredAmount={selectedForContribute.contributionAmount}
+        />
+      )}
+      {selectedForWithdrawal && (
+        <WithdrawalRequestModal
+          isOpen
+          onClose={() => setSelectedForWithdrawal(null)}
+          group={selectedForWithdrawal}
+        />
+      )}
+      {selectedForDetails && (
+        <GroupDetailsModal
+          isOpen
+          onClose={() => setSelectedForDetails(null)}
+          group={selectedForDetails}
         />
       )}
     </section>
