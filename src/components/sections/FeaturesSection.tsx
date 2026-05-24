@@ -68,7 +68,12 @@ export const FeaturesSection: React.FC = () => {
   const [ref, isVisible] = useIntersectionObserver({ threshold: 0.1 });
 
   return (
-    <section id="features" className="features-section" ref={ref as React.RefObject<HTMLElement>}>
+    <section
+      id="features"
+      className="features-section"
+      ref={ref as React.RefObject<HTMLElement>}
+      aria-label="CareSplit features"
+    >
       <div className="container">
         <div className={`section-header fade-in-section ${isVisible ? 'visible' : ''}`}>
           <h2 className="section-title">Why Choose CareSplit?</h2>
@@ -76,17 +81,18 @@ export const FeaturesSection: React.FC = () => {
             A modern approach to traditional community savings with blockchain security
           </p>
         </div>
-        <div className="features-grid">
+        <div className="features-grid" role="list">
           {features.map((feature, idx) => (
-            <div
+            <article
               key={idx}
               className={`feature-card fade-in-section ${isVisible ? 'visible' : ''}`}
               style={{ transitionDelay: `${idx * 80}ms` }}
+              role="listitem"
             >
               <div className="feature-icon" aria-hidden="true">{feature.icon}</div>
               <h3 className="feature-title">{feature.title}</h3>
               <p className="feature-description">{feature.desc}</p>
-            </div>
+            </article>
           ))}
         </div>
       </div>
