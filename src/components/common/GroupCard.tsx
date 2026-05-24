@@ -22,10 +22,6 @@ export const GroupCard: React.FC<GroupCardProps> = ({
   const { addToast } = useToast();
   const [copying, setCopying] = useState(false);
 
-  const fillPercent = group.maxMembers > 0
-    ? Math.round((group.memberCount / group.maxMembers) * 100)
-    : 0;
-
   const handleCopyId = async () => {
     setCopying(true);
     const ok = await copyToClipboard(String(group.id));
