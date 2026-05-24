@@ -1200,7 +1200,26 @@
 /* =====================
    GroupCard
    ===================== */
-.group-card { display: flex; flex-direction: column; gap: 16px; }
+.group-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: box-shadow 0.3s ease;
+}
+
+.feature-card:has(.group-card):hover,
+.feature-card:hover .group-card {
+  /* Glow applied at parent card level */
+}
+
+/* Add subtle glow when group card container is hovered */
+.features-grid > .feature-card {
+  transition: all 0.3s ease;
+}
+
+.features-grid > .feature-card:hover {
+  box-shadow: 0 8px 32px rgba(124,58,237,0.2), 0 0 0 1px var(--accent-border);
+}
 
 .group-card-header {
   display: flex;
