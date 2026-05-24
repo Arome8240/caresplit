@@ -2119,3 +2119,25 @@
   scrollbar-width: thin;
   scrollbar-color: var(--border) var(--bg);
 }
+
+/* =====================
+   Section dividers
+   ===================== */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border), transparent);
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+/* Consistent section spacing via CSS custom properties */
+:root {
+  --section-pad: 100px;
+  --section-pad-sm: 64px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --section-pad: var(--section-pad-sm);
+  }
+}
