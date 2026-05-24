@@ -925,6 +925,11 @@
   color: var(--accent);
 }
 
+.wallet-dropdown-disconnect:hover {
+  background: rgba(239,68,68,0.1);
+  color: #ef4444;
+}
+
 .error-banner {
   background: rgba(239,68,68,0.1);
   border-bottom: 1px solid rgba(239,68,68,0.2);

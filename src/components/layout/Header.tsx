@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useWallet } from '../../contexts/WalletContext';
 import { formatAddress } from '../../utils/format';
+import { copyToClipboard } from '../../utils/clipboard';
+import { useToast } from '../../contexts/ToastContext';
 
 export const Header: React.FC = () => {
   const { address, isConnected, connectWallet, connectWalletConnect, disconnectWallet, error, isMiniPay, isConnecting } = useWallet();
+  const { addToast } = useToast();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [showWalletMenu, setShowWalletMenu] = useState(false);
@@ -95,6 +98,23 @@ export const Header: React.FC = () => {
                     <div className="wallet-dropdown" role="menu">
                       <button
                         className="wallet-dropdown-item"
+                        onClick={async () => {
+                          if (address) {
+                            const ok = await copyToClipboard(address);
+                            addToast(ok ? 'Address copied!' : 'Copy failed', ok ? 'success' : 'error');
+                          }
+                          setShowWalletMenu(false);
+                        }}
+                        role="menuitem"
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                          <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" strokeWidth="2"/>
+                          <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                        </svg>
+                        Copy Address
+                      </button>
+                      <button
+                        className="wallet-dropdown-item wallet-dropdown-disconnect"
                         onClick={() => { disconnectWallet(); setShowWalletMenu(false); }}
                         role="menuitem"
                       >
