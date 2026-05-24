@@ -1791,3 +1791,70 @@
    Withdrawal Modal
    ===================== */
 .withdrawal-modal-body { display: flex; flex-direction: column; gap: 20px; }
+
+/* =====================
+   Micro-interactions & Accessibility
+   ===================== */
+.btn-primary:active,
+.btn-secondary:active { transform: translateY(0) scale(0.98); }
+
+.btn-primary:disabled,
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.logo { text-decoration: none; }
+
+/* =====================
+   Logo responsive
+   ===================== */
+@media (max-width: 768px) {
+  .logo-text { font-size: 18px; }
+}
+
+/* =====================
+   Button size variant
+   ===================== */
+.btn-sm {
+  padding: 7px 14px !important;
+  font-size: 13px !important;
+  border-radius: 8px !important;
+}
+
+/* =====================
+   Tablet / Desktop grid fixes
+   ===================== */
+@media (max-width: 1024px) {
+  .stats-section-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* =====================
+   Mobile group card
+   ===================== */
+@media (max-width: 640px) {
+  .dashboard-header { flex-direction: column; align-items: flex-start; }
+  .dashboard-controls { width: 100%; }
+  .search-input { min-width: 0; flex: 1; }
+  .features-grid { grid-template-columns: 1fr; }
+  .details-grid { grid-template-columns: 1fr; }
+  .voting-actions { grid-template-columns: 1fr; }
+  .contribute-amount-value { font-size: 40px; }
+}
+
+/* =====================
+   Misc utilities
+   ===================== */
+.text-accent { color: var(--accent); }
+.text-muted  { color: var(--text); }
+
+/* hero stat min-height prevents layout shift during skeleton load */
+.stat { min-height: 80px; display: flex; flex-direction: column; justify-content: center; }
