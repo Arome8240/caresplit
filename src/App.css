@@ -399,10 +399,28 @@
 
 .cta-card {
   padding: 80px 40px;
-  background: linear-gradient(135deg, var(--accent) 0%, #c084fc 100%);
+  background: linear-gradient(135deg, var(--accent) 0%, #c084fc 50%, #3b82f6 100%);
+  background-size: 200% 200%;
+  animation: ctaGradient 6s ease infinite;
   border-radius: 24px;
   text-align: center;
   color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at top right, rgba(255,255,255,0.15) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+@keyframes ctaGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .cta-title {
