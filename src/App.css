@@ -1401,7 +1401,9 @@
 }
 
 @media (max-width: 640px) {
-  .trust-grid { grid-template-columns: 1fr; }
+  .trust-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .trust-item { padding: 24px 16px; }
+  .trust-icon { width: 44px; height: 44px; }
 }
 
 /* =====================
