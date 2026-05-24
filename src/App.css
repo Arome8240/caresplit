@@ -355,11 +355,13 @@
   border-radius: 16px;
   text-align: center;
   transition: all 0.3s;
+  position: relative;
 }
 
 .step-card:hover {
   transform: translateY(-4px);
   border-color: var(--accent-border);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.15);
 }
 
 .step-number {
@@ -523,10 +525,27 @@
 
   .steps-grid {
     grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .step-card {
+    padding: 24px 20px;
+    text-align: left;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    gap: 4px 16px;
+    align-items: start;
+  }
+
+  .step-icon {
+    grid-row: span 2;
   }
 
   .step-arrow {
     transform: rotate(90deg);
+    font-size: 20px;
+    padding: 4px;
   }
 
   .footer-content {
