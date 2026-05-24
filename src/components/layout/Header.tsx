@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useWallet } from '../../contexts/WalletContext';
 import { formatAddress } from '../../utils/format';
 
@@ -7,11 +7,31 @@ export const Header: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [showWalletMenu, setShowWalletMenu] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    const sections = ['features', 'how-it-works', 'faq'];
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(e => { if (e.isIntersecting) setActiveSection(e.target.id); });
+      },
+      { rootMargin: '-40% 0px -55% 0px' }
+    );
+    sections.forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
+    return () => observer.disconnect();
+  }, []);
+
+  const handleNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const target = document.querySelector(href);
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+    setMobileOpen(false);
   }, []);
 
   useEffect(() => {
@@ -45,7 +65,14 @@ export const Header: React.FC = () => {
 
             <nav className="nav" aria-label="Main navigation">
               {navLinks.map(link => (
-                <a key={link.href} href={link.href}>{link.label}</a>
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={activeSection === link.href.slice(1) ? 'nav-active' : ''}
+                  onClick={e => handleNavClick(e, link.href)}
+                >
+                  {link.label}
+                </a>
               ))}
             </nav>
 
@@ -119,7 +146,12 @@ export const Header: React.FC = () => {
         <div className="mobile-nav-overlay" onClick={() => setMobileOpen(false)}>
           <nav className="mobile-nav" onClick={e => e.stopPropagation()} aria-label="Mobile navigation">
             {navLinks.map(link => (
-              <a key={link.href} href={link.href} className="mobile-nav-link" onClick={() => setMobileOpen(false)}>
+              <a
+                key={link.href}
+                href={link.href}
+                className={`mobile-nav-link ${activeSection === link.href.slice(1) ? 'nav-active' : ''}`}
+                onClick={e => handleNavClick(e, link.href)}
+              >
                 {link.label}
               </a>
             ))}
